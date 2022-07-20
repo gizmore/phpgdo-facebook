@@ -33,7 +33,7 @@ final class GDO_OAuthToken extends GDO
 	/**
 	 * @return GDO_User
 	 */
-	public function getUser() { return $this->getValue('oauth_user'); }
+	public function getUser() { return $this->gdoValue('oauth_user'); }
 	public function getUserID() { return $this->gdoVar('oauth_user'); }
 	public function getToken() { return $this->gdoVar('oauth_token'); }
 	

@@ -10,7 +10,7 @@ use GDO\Core\GDT_Secret;
 use GDO\User\GDO_User;
 use GDO\Net\HTTP;
 use GDO\UI\GDT_Success;
-use GDO\Core\GDT_Error;
+use GDO\UI\GDT_Error;
 use GDO\UI\GDT_Button;
 use GDO\Core\GDT_Array;
 

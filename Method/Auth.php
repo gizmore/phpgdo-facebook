@@ -10,17 +10,19 @@ use GDO\Form\MethodForm;
 use GDO\Login\Method\Form;
 use GDO\User\GDO_User;
 use GDO\Session\GDO_Session;
+
 /**
  * Facebook OAuth connector.
+ * 
  * @author gizmore
- * @since 4.0
- * @version 5.0
+ * @version 7.0.l
+ * @since 4.0.0
  */
 final class Auth extends MethodForm
 {
 	public function isUserRequired() : bool { return false; }
 	
-	public function getUserType() { return 'ghost'; }
+	public function getUserType() : ?string { return 'ghost'; }
 	
 	public function execute()
 	{
@@ -71,12 +73,11 @@ final class Auth extends MethodForm
 			GDT_Hook::callWithIPC('UserActivated', $user, null);
 			GDT_Hook::callWithIPC('FBUserActivated', $user, substr($user->gdoVar('user_name'), 4));
 		}
-		
-		
 	}
 	
 	private function authenticate(Form $method, GDO_User $user)
 	{
 		return $method->loginSuccess($user);
 	}
+	
 }

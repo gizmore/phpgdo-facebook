@@ -5,7 +5,7 @@ use GDO\Core\GDO;
 use GDO\Net\GDT_IP;
 use GDO\Core\GDT_Char;
 use GDO\Core\GDT_String;
-use GDO\DB\GDT_Text;
+use GDO\Core\GDT_Text;
 use GDO\User\GDT_User;
 use GDO\User\GDO_User;
 /**

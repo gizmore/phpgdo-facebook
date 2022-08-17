@@ -17,12 +17,14 @@ final class GDT_FBAuthButton extends GDT_Button
 	
 	public function facebookURL()
 	{
-		$module = Module_Facebook::instance();
-		$fb = $module->getFacebook();
-		$helper = $fb->getRedirectLoginHelper();
-		$permissions = ['email']; // Optional permissions
-		$redirectURL = url('Facebook', 'Auth', '&connectFB=1');
-		return $helper->getLoginUrl($redirectURL, $permissions);
+		return Module_Facebook::withDeprecation(function(){
+			$module = Module_Facebook::instance();
+			$fb = $module->getFacebook();
+			$helper = $fb->getRedirectLoginHelper();
+			$permissions = ['email']; // Optional permissions
+			$redirectURL = url('Facebook', 'Auth', '&connectFB=1');
+			return $helper->getLoginUrl($redirectURL, $permissions);
+		});
 	}
 	
 	public function renderHTML() : string { return GDT_Template::php('Facebook', 'cell/fbauthbutton.php', ['field' => $this]); }

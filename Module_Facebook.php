@@ -77,9 +77,21 @@ final class Module_Facebook extends GDO_Module
 				$config['persistent_data_handler'] = 'memory';
 			}
 			
-			$fb = new \Facebook\Facebook($config);
+			$old = error_reporting(E_ALL & ~E_DEPRECATED);
+			$fb = self::withDeprecation(function() use ($config) {
+				return new \Facebook\Facebook($config);
+			}); 
+			error_reporting($old);
 		}
 		return $fb;
+	}
+	
+	public static function withDeprecation($callback)
+	{
+		$old = error_reporting(E_ALL|~E_DEPRECATED);
+		$result = $callback();
+		error_reporting($old);
+		return $result;
 	}
 	
 	#############

@@ -17,7 +17,7 @@ final class GDT_FBAuthButton extends GDT_Button
 	
 	public function facebookURL()
 	{
-		return Module_Facebook::withDeprecation(function(){
+		return Module_Facebook::withDeprecation(function() {
 			$module = Module_Facebook::instance();
 			$fb = $module->getFacebook();
 			$helper = $fb->getRedirectLoginHelper();

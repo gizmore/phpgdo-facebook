@@ -88,7 +88,7 @@ final class Module_Facebook extends GDO_Module
 	
 	public static function withDeprecation($callback)
 	{
-		$old = error_reporting(E_ALL|~E_DEPRECATED);
+		$old = error_reporting(0);
 		$result = $callback();
 		error_reporting($old);
 		return $result;

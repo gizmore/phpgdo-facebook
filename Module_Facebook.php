@@ -30,7 +30,7 @@ final class Module_Facebook extends GDO_Module
 	
 	public function getClasses() : array { return ['GDO\Facebook\GDO_OAuthToken']; }
 	public function onLoadLanguage() : void { $this->loadLanguage('lang/facebook'); }
-	public function thirdPartyFolders() : array { return ['/php-']; }
+	public function thirdPartyFolders() : array { return ['php-graph-sdk']; }
 	
 	##############
 	### Config ###
@@ -127,11 +127,6 @@ final class Module_Facebook extends GDO_Module
 			}
 		}
 		echo GDT_Error::with('fb_avatar_not_imported')->render();
-	}
-	
-	public function hookIgnoreDocsFiles(GDT_Array $ignore)
-	{
-	    $ignore->data[] = 'GDO/Facebook/php-graph-sdk/**/*';
 	}
 	
 }

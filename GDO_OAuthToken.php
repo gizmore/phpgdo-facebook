@@ -58,8 +58,8 @@ final class GDO_OAuthToken extends GDO
 				'user_type' => GDO_User::MEMBER,
 				'user_email' => $email,
 				'user_name' => $name,
-				'user_real_name' => $displayName,
-				'user_password' => $provider,
+// 				'user_real_name' => $displayName,
+// 				'user_password' => $provider,
 				'user_register_ip' => GDT_IP::current(),
 			))->insert();
 			$user->tempSet('justActivated', true);

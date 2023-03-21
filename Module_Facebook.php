@@ -1,41 +1,44 @@
 <?php
 namespace GDO\Facebook;
 
+use Facebook\Facebook;
 use GDO\Avatar\GDO_UserAvatar;
 use GDO\Core\Application;
 use GDO\Core\GDO_Module;
-use GDO\Form\GDT_Form;
 use GDO\Core\GDT_Checkbox;
 use GDO\Core\GDT_Secret;
-use GDO\User\GDO_User;
+use GDO\Form\GDT_Form;
 use GDO\Net\HTTP;
-use GDO\UI\GDT_Success;
-use GDO\UI\GDT_Error;
 use GDO\UI\GDT_Button;
-use GDO\Core\GDT_Array;
+use GDO\UI\GDT_Error;
+use GDO\UI\GDT_Success;
+use GDO\User\GDO_User;
 
 /**
  * Facebook SDK Module and Authentication.
- * 
- * @author gizmore
+ *
  * @version 6.10.1
  * @since 4.0.0
- * 
+ *
+ * @author gizmore
  * @see OAuthToken
  * @see GDT_FBAuthButton
  */
 final class Module_Facebook extends GDO_Module
 {
+
 	public int $priority = 45;
-	
-	public function getClasses() : array { return ['GDO\Facebook\GDO_OAuthToken']; }
-	public function onLoadLanguage() : void { $this->loadLanguage('lang/facebook'); }
-	public function thirdPartyFolders() : array { return ['php-graph-sdk']; }
-	
+
+	public function getClasses(): array { return ['GDO\Facebook\GDO_OAuthToken']; }
+
+	public function onLoadLanguage(): void { $this->loadLanguage('lang/facebook'); }
+
+	public function thirdPartyFolders(): array { return ['php-graph-sdk']; }
+
 	##############
 	### Config ###
 	##############
-	public function getConfig() : array
+	public function getConfig(): array
 	{
 		return [
 			GDT_Checkbox::make('fb_auth')->initial('1'),
@@ -43,15 +46,9 @@ final class Module_Facebook extends GDO_Module
 			GDT_Secret::make('fb_secret')->ascii()->caseS()->max(64)->initial('f0e9ee41ea8d2dd2f9d5491dc81783e8'),
 		];
 	}
-	public function cfgAuth() { return $this->getConfigValue('fb_auth'); }
-	public function cfgAppID() { return $this->getConfigValue('fb_app_id'); }
-	public function cfgSecret() { return $this->getConfigValue('fb_secret'); }
-	
-	############
-	### Util ###
-	############
+
 	/**
-	 * @return \Facebook\Facebook
+	 * @return Facebook
 	 */
 	public function getFacebook()
 	{
@@ -65,27 +62,39 @@ final class Module_Facebook extends GDO_Module
 				'app_secret' => $this->cfgSecret(),
 				'cookie' => true,
 			];
-			
+
 			if (!Application::instance()->isCLI())
 			{
 				# lib requires normal php sessions.
-				if (!session_id()) { session_start(); }
+				if (!session_id())
+				{
+					session_start();
+				}
 				$config['persistent_data_handler'] = 'session';
 			}
 			else
 			{
 				$config['persistent_data_handler'] = 'memory';
 			}
-			
+
 			$old = error_reporting(E_ALL & ~E_DEPRECATED);
-			$fb = self::withDeprecation(function() use ($config) {
-				return new \Facebook\Facebook($config);
-			}); 
+			$fb = self::withDeprecation(function () use ($config)
+			{
+				return new Facebook($config);
+			});
 			error_reporting($old);
 		}
 		return $fb;
 	}
-	
+
+	public function cfgAppID() { return $this->getConfigValue('fb_app_id'); }
+
+	public function cfgSecret() { return $this->getConfigValue('fb_secret'); }
+
+	############
+	### Util ###
+	############
+
 	public static function withDeprecation($callback)
 	{
 		$old = error_reporting(0);
@@ -93,25 +102,30 @@ final class Module_Facebook extends GDO_Module
 		error_reporting($old);
 		return $result;
 	}
-	
-	#############
-	### Hooks ###
-	#############
+
 	/**
 	 * Hook into register and login form creation and add a link.
+	 *
 	 * @param GDT_Form $form
 	 */
 	public function hookLoginForm(GDT_Form $form) { $this->hookRegisterForm($form); }
+
+	#############
+	### Hooks ###
+	#############
+
 	public function hookRegisterForm(GDT_Form $form)
 	{
-	    if ($this->cfgAuth())
-	    {
-    	    $form->actions()->addField(
-    	        GDT_Button::make('link_fb_auth')->secondary()->href(
-    	            href('Facebook', 'Auth')));
-	    }
+		if ($this->cfgAuth())
+		{
+			$form->actions()->addField(
+				GDT_Button::make('link_fb_auth')->secondary()->href(
+					href('Facebook', 'Auth')));
+		}
 	}
-	
+
+	public function cfgAuth() { return $this->getConfigValue('fb_auth'); }
+
 	public function hookFBUserActivated(GDO_User $user, $fbId)
 	{
 		if (module_enabled('Avatar'))
@@ -128,5 +142,5 @@ final class Module_Facebook extends GDO_Module
 		}
 		echo GDT_Error::with('fb_avatar_not_imported')->render();
 	}
-	
+
 }

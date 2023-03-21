@@ -3,21 +3,25 @@ namespace GDO\Facebook;
 
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Button;
+
 /**
  * Login with Facebook button.
+ *
  * @author gizmore
  */
 final class GDT_FBAuthButton extends GDT_Button
 {
+
 	protected function __construct()
 	{
 		$this->name('btn_facebook');
 		$this->href($this->facebookURL());
 	}
-	
+
 	public function facebookURL()
 	{
-		return Module_Facebook::withDeprecation(function() {
+		return Module_Facebook::withDeprecation(function ()
+		{
 			$module = Module_Facebook::instance();
 			$fb = $module->getFacebook();
 			$helper = $fb->getRedirectLoginHelper();
@@ -26,6 +30,7 @@ final class GDT_FBAuthButton extends GDT_Button
 			return $helper->getLoginUrl($redirectURL, $permissions);
 		});
 	}
-	
-	public function renderHTML() : string { return GDT_Template::php('Facebook', 'cell/fbauthbutton.php', ['field' => $this]); }
+
+	public function renderHTML(): string { return GDT_Template::php('Facebook', 'cell/fbauthbutton.php', ['field' => $this]); }
+
 }

@@ -1,6 +1,7 @@
 <?php
 namespace GDO\Facebook\Method;
 
+use GDO\Core\GDT;
 use GDO\Core\GDT_Hook;
 use GDO\Facebook\GDO_OAuthToken;
 use GDO\Facebook\GDT_FBAuthButton;
@@ -25,7 +26,7 @@ final class Auth extends MethodForm
 
 	public function getUserType(): ?string { return 'ghost'; }
 
-	public function execute()
+	public function execute(): GDT
 	{
 		if (isset($_GET['connectFB']))
 		{

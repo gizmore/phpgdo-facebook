@@ -8,6 +8,7 @@ use GDO\Core\GDT_Text;
 use GDO\Net\GDT_IP;
 use GDO\User\GDO_User;
 use GDO\User\GDT_User;
+use GDO\User\GDT_UserType;
 
 /**
  * Mapping of ProviderID to userid.
@@ -42,7 +43,7 @@ final class GDO_OAuthToken extends GDO
 		{
 			# Not found => Create with fb data
 			$user = GDO_User::blank([
-				'user_type' => GDO_User::MEMBER,
+				'user_type' => GDT_UserType::MEMBER,
 				'user_email' => $email,
 				'user_name' => $name,
 // 				'user_real_name' => $displayName,

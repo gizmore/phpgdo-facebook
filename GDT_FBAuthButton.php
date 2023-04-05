@@ -1,6 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Facebook;
 
+use GDO\Core\Application;
 use GDO\Core\GDT_Template;
 use GDO\UI\GDT_Button;
 
@@ -12,10 +14,19 @@ use GDO\UI\GDT_Button;
 final class GDT_FBAuthButton extends GDT_Button
 {
 
+	public function isTestable(): bool
+	{
+		return false;
+	}
+
 	protected function __construct()
 	{
+		parent::__construct();
 		$this->name('btn_facebook');
-		$this->href($this->facebookURL());
+		if (!Application::$INSTANCE->isCLIOrUnitTest())
+		{
+			$this->href($this->facebookURL());
+		}
 	}
 
 	public function facebookURL()

@@ -42,6 +42,10 @@ final class GDT_FBAuthButton extends GDT_Button
 		});
 	}
 
-	public function renderHTML(): string { return GDT_Template::php('Facebook', 'cell/fbauthbutton.php', ['field' => $this]); }
+	public function renderHTML(): string
+	{
+		return GDT_Template::php('Facebook', 'cell/fbauthbutton.php', [
+			'field' => $this]);
+	}
 
 }

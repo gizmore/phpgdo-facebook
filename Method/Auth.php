@@ -75,7 +75,7 @@ final class Auth extends MethodForm
 		return $method->loginSuccess($user);
 	}
 
-	public function createForm(GDT_Form $form): void
+	protected function createForm(GDT_Form $form): void
 	{
 		$form->addFields(
 			GDT_FBAuthButton::make(),

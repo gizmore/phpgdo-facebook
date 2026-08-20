@@ -35,7 +35,11 @@ final class Module_Facebook extends GDO_Module
 
 	public function thirdPartyFolders(): array { return ['php-graph-sdk']; }
 
-	##############
+    public function getLicenseFilenames(): array { return ['php-graph-sdk/LICENSE']; }
+
+    public string $license = 'Facebook';
+
+    ##############
 	### Config ###
 	##############
 	public function getConfig(): array

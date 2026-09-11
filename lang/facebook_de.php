@@ -7,6 +7,6 @@ return [
 	'msg_fb_avatar_imported' => 'Ihr Facebook Avatar wurde importiert.',
 	'err_fb_avatar_not_imported' => 'Ihr Facebook Avatar wurde nicht importiert.',
 	'cfg_fb_auth' => 'Authentifizierung aktivieren?',
-	'cfg_fb_app_id' => 'Facebook App Id',
-	'cfg_fb_secret' => 'Facebook App Secret',
+	'cfg_fb_app_id' => 'Facebook-Anwendungs-ID',
+	'cfg_fb_secret' => 'Facebook-Anwendungsgeheimnis',
 ];
